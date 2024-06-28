@@ -66,4 +66,18 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-hi
+
+
+
+$ npm i -g @nestjs/cli
+$ nest new project-name
+
+$ git clone https://github.com/nestjs/typescript-starter.git project
+$ cd project
+$ npm install
+$ npm run start
+
+
+npm install prisma --save-dev
+npx prisma
+npx prisma init
