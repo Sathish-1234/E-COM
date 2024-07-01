@@ -19,7 +19,7 @@ const FooterCopyright = ({ footerLogo, spaceBottomClass, colorClass }) => {
         >
           Flone
         </a>
-        .<br /> All Rights Reserved sarhis``
+        .<br /> All Rights Reserved
       </p>
     </div>
   );
