@@ -1,0 +1,44 @@
+name: Deploy to Ubuntu Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build React app
+      run: npm run build --if-present
+
+    - name: Add SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+
+    - name: Copy files via SSH
+      run: |
+        scp -r -o StrictHostKeyChecking=no ./build root@178.16.139.19:/path/to/deploy
+        scp -r -o StrictHostKeyChecking=no ./server root@178.16.139.19:/path/to/deploy
+
+    - name: Deploy via SSH
+      run: |
+        ssh -o StrictHostKeyChecking=no root@178.16.139.19 << 'EOF'
+        cd /path/to/deploy
+        npm install --production
+        pm2 reload ecosystem.config.js --env production
+        EOF
